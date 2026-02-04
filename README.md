@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Find Your Outbound Personality</title>
+    <title>Find Your Outbound Personality - Cold Email Quiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,145 +13,484 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --ocean-deep: #0a2540;
+            --ocean-medium: #1a4d7a;
+            --ocean-light: #4a90e2;
+            --ocean-foam: #7ec8e3;
+            --sand: #f8f4e8;
+            --coral: #ff6b6b;
+            --seaweed: #2ecc71;
+            --pearl: #ffffff;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'DM Sans', sans-serif;
+            background: linear-gradient(180deg, #0a2540 0%, #1a4d7a 50%, #4a90e2 100%);
             min-height: 100vh;
-            padding: 20px;
+            color: var(--pearl);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(126, 200, 227, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(46, 204, 113, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(255, 107, 107, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            animation: drift 20s ease-in-out infinite;
+        }
+
+        @keyframes drift {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-20px, 20px); }
+        }
+
+        .bubbles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -100px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: rise 15s infinite ease-in;
+        }
+
+        .bubble:nth-child(1) { left: 10%; width: 40px; height: 40px; animation-delay: 0s; animation-duration: 12s; }
+        .bubble:nth-child(2) { left: 25%; width: 20px; height: 20px; animation-delay: 2s; animation-duration: 10s; }
+        .bubble:nth-child(3) { left: 45%; width: 30px; height: 30px; animation-delay: 4s; animation-duration: 14s; }
+        .bubble:nth-child(4) { left: 65%; width: 25px; height: 25px; animation-delay: 1s; animation-duration: 11s; }
+        .bubble:nth-child(5) { left: 80%; width: 35px; height: 35px; animation-delay: 3s; animation-duration: 13s; }
+        .bubble:nth-child(6) { left: 90%; width: 15px; height: 15px; animation-delay: 5s; animation-duration: 9s; }
+
+        @keyframes rise {
+            0% {
+                bottom: -100px;
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(100px);
+            }
+            100% {
+                bottom: 110vh;
+                transform: translateX(-100px);
+            }
         }
 
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
         }
 
-        .header {
+        /* Hero Section */
+        .hero {
             text-align: center;
+            padding: 60px 20px 80px;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ffffff 0%, #7ec8e3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 50px;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Sea Creatures Showcase */
+        .creatures-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 20px;
+            margin-bottom: 80px;
+            padding: 0 20px;
+        }
+
+        .creature-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 25px 15px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            animation: fadeInUp 0.6s ease-out both;
+        }
+
+        .creature-card:nth-child(1) { animation-delay: 0.1s; }
+        .creature-card:nth-child(2) { animation-delay: 0.15s; }
+        .creature-card:nth-child(3) { animation-delay: 0.2s; }
+        .creature-card:nth-child(4) { animation-delay: 0.25s; }
+        .creature-card:nth-child(5) { animation-delay: 0.3s; }
+        .creature-card:nth-child(6) { animation-delay: 0.35s; }
+        .creature-card:nth-child(7) { animation-delay: 0.4s; }
+        .creature-card:nth-child(8) { animation-delay: 0.45s; }
+
+        .creature-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(126, 200, 227, 0.5);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .creature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 12px;
+            display: block;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+        }
+
+        .creature-name {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 5px;
+        }
+
+        .creature-subtitle {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.3;
+        }
+
+        /* Quiz Introduction */
+        .quiz-intro {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            padding: 50px 40px;
+            margin-bottom: 40px;
+            text-align: center;
+            animation: fadeInUp 0.8s ease-out 0.5s both;
+        }
+
+        .quiz-intro h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: var(--ocean-foam);
+        }
+
+        .quiz-intro p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.85);
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .start-button {
+            display: inline-block;
+            padding: 18px 50px;
+            background: linear-gradient(135deg, var(--coral) 0%, #ff8787 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+            text-decoration: none;
+        }
+
+        .start-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.5);
+        }
+
+        /* Quiz Container */
+        .quiz-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 50px;
+            max-width: 900px;
+            margin: 0 auto;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+            color: var(--ocean-deep);
+            display: none;
+        }
+
+        .quiz-section.active {
+            display: block;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .progress-container {
             margin-bottom: 40px;
         }
 
-        .header h1 {
-            color: #333;
-            font-size: 2.5em;
-            margin-bottom: 10px;
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+            color: var(--ocean-medium);
+            font-weight: 600;
         }
 
-        .header p {
-            color: #666;
-            font-size: 1.1em;
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: rgba(10, 37, 64, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--ocean-light) 0%, var(--ocean-foam) 100%);
+            width: 0%;
+            transition: width 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
 
         .question-container {
-            margin-bottom: 35px;
-            padding: 25px;
-            background: #f8f9fa;
-            border-radius: 12px;
-            border-left: 4px solid #667eea;
+            margin-bottom: 40px;
+        }
+
+        .question-number {
+            display: inline-block;
+            background: var(--ocean-light);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 20px;
         }
 
         .question-container h3 {
-            color: #333;
-            margin-bottom: 15px;
-            font-size: 1.2em;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: var(--ocean-deep);
+            margin-bottom: 25px;
+            line-height: 1.4;
         }
 
         .options {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+            display: grid;
+            gap: 15px;
         }
 
         .option {
-            padding: 15px 20px;
-            background: white;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
+            padding: 20px 25px;
+            background: rgba(10, 37, 64, 0.04);
+            border: 2px solid rgba(10, 37, 64, 0.1);
+            border-radius: 15px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1em;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 1.05rem;
+            color: var(--ocean-deep);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(74, 144, 226, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .option:hover::before {
+            left: 100%;
         }
 
         .option:hover {
-            border-color: #667eea;
-            background: #f0f4ff;
+            border-color: var(--ocean-light);
+            background: rgba(74, 144, 226, 0.08);
             transform: translateX(5px);
         }
 
         .option.selected {
-            background: #667eea;
+            background: linear-gradient(135deg, var(--ocean-light) 0%, var(--ocean-medium) 100%);
             color: white;
-            border-color: #667eea;
-        }
-
-        .submit-btn {
-            display: block;
-            width: 100%;
-            padding: 18px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.2em;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 30px;
-            transition: transform 0.2s;
-        }
-
-        .submit-btn:hover {
+            border-color: var(--ocean-medium);
             transform: scale(1.02);
         }
 
-        .submit-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
+        .navigation-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: space-between;
+            margin-top: 40px;
         }
 
+        .btn {
+            padding: 15px 35px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .btn-secondary {
+            background: rgba(10, 37, 64, 0.1);
+            color: var(--ocean-deep);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(10, 37, 64, 0.15);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--ocean-light) 0%, var(--ocean-medium) 100%);
+            color: white;
+            box-shadow: 0 8px 20px rgba(74, 144, 226, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(74, 144, 226, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Result Section */
         .result-container {
             display: none;
             text-align: center;
-            animation: fadeIn 0.5s;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .result-container.active {
+            display: block;
+            animation: fadeInUp 0.8s ease-out;
         }
 
-        .personality-icon {
-            font-size: 120px;
-            margin: 20px 0;
+        .personality-icon-large {
+            font-size: 140px;
+            margin: 30px 0;
+            display: block;
+            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.2));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
         }
 
         .personality-title {
-            font-size: 2.5em;
-            color: #333;
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--ocean-deep);
             margin-bottom: 10px;
         }
 
         .personality-subtitle {
-            font-size: 1.3em;
-            color: #666;
-            margin-bottom: 30px;
+            font-size: 1.4rem;
+            color: var(--ocean-medium);
             font-style: italic;
+            margin-bottom: 40px;
+        }
+
+        .personality-meaning {
+            font-size: 1.2rem;
+            color: var(--ocean-deep);
+            margin-bottom: 50px;
+            padding: 25px;
+            background: rgba(74, 144, 226, 0.08);
+            border-radius: 15px;
+            border-left: 4px solid var(--ocean-light);
         }
 
         .personality-section {
             text-align: left;
-            margin: 25px 0;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 10px;
+            margin: 30px 0;
+            padding: 30px;
+            background: rgba(10, 37, 64, 0.04);
+            border-radius: 20px;
         }
 
         .personality-section h4 {
-            color: #667eea;
-            font-size: 1.3em;
-            margin-bottom: 12px;
+            font-family: 'Playfair Display', serif;
+            color: var(--ocean-light);
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-icon {
+            font-size: 1.8rem;
         }
 
         .personality-section ul {
@@ -159,90 +499,172 @@
         }
 
         .personality-section li {
-            padding: 8px 0;
-            padding-left: 25px;
+            padding: 12px 0;
+            padding-left: 35px;
             position: relative;
-            color: #444;
-            line-height: 1.6;
+            color: var(--ocean-deep);
+            line-height: 1.7;
+            font-size: 1.05rem;
         }
 
         .personality-section li:before {
-            content: "•";
+            content: "→";
             position: absolute;
             left: 0;
-            color: #667eea;
+            color: var(--ocean-light);
             font-weight: bold;
-            font-size: 1.5em;
+            font-size: 1.3rem;
         }
 
         .restart-btn {
-            margin-top: 30px;
-            padding: 15px 40px;
-            background: white;
-            color: #667eea;
-            border: 2px solid #667eea;
-            border-radius: 8px;
-            font-size: 1.1em;
+            margin-top: 40px;
+            padding: 18px 50px;
+            background: linear-gradient(135deg, var(--coral) 0%, #ff8787 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.15rem;
+            font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
+            transition: all 0.3s ease;
         }
 
         .restart-btn:hover {
-            background: #667eea;
-            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.4);
         }
 
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #e0e0e0;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                padding: 25px;
+        @media (max-width: 768px) {
+            .creatures-showcase {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 12px;
             }
-            
-            .header h1 {
-                font-size: 1.8em;
+
+            .creature-card {
+                padding: 20px 10px;
             }
-            
+
+            .creature-icon {
+                font-size: 2.5rem;
+            }
+
+            .creature-name {
+                font-size: 0.85rem;
+            }
+
+            .creature-subtitle {
+                font-size: 0.7rem;
+            }
+
+            .quiz-section {
+                padding: 30px 25px;
+            }
+
+            .quiz-intro {
+                padding: 35px 25px;
+            }
+
+            .navigation-buttons {
+                flex-direction: column;
+            }
+
             .personality-title {
-                font-size: 2em;
+                font-size: 2.2rem;
             }
         }
     </style>
 </head>
 <body>
+    <div class="bubbles">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+    </div>
+
     <div class="container">
-        <div class="header">
-            <h1>🌊 Find Your Outbound Personality</h1>
-            <p>Discover what type of cold emailer you are</p>
+        <!-- Hero Section -->
+        <div class="hero" id="hero-section">
+            <h1>🌊 Discover Your Outbound Personality</h1>
+            <p class="hero-subtitle">What type of cold emailer are you? Find out in 2 minutes.</p>
         </div>
 
-        <div id="quiz-container">
-            <div class="progress-bar">
-                <div class="progress-fill" id="progress"></div>
+        <!-- Sea Creatures Showcase -->
+        <div class="creatures-showcase" id="creatures-showcase">
+            <div class="creature-card">
+                <span class="creature-icon">🐋</span>
+                <div class="creature-name">The Whale</div>
+                <div class="creature-subtitle">Volume Broadcaster</div>
+            </div>
+            <div class="creature-card">
+                <span class="creature-icon">🦈</span>
+                <div class="creature-name">The Shark</div>
+                <div class="creature-subtitle">Aggressive Hunter</div>
+            </div>
+            <div class="creature-card">
+                <span class="creature-icon">🐙</span>
+                <div class="creature-name">The Octopus</div>
+                <div class="creature-subtitle">Adaptive Strategist</div>
+            </div>
+            <div class="creature-card">
+                <span class="creature-icon">🦑</span>
+                <div class="creature-name">The Squid</div>
+                <div class="creature-subtitle">Invisible Sender</div>
+            </div>
+            <div class="creature-card">
+                <span class="creature-icon">🦭</span>
+                <div class="creature-name">The Seal</div>
+                <div class="creature-subtitle">Friendly Builder</div>
+            </div>
+            <div class="creature-card">
+                <span class="creature-icon">⭐</span>
+                <div class="creature-name">The Starfish</div>
+                <div class="creature-subtitle">Balanced Performer</div>
+            </div>
+            <div class="creature-card">
+                <span class="creature-icon">🐢</span>
+                <div class="creature-name">The Turtle</div>
+                <div class="creature-subtitle">Patient Hesitator</div>
+            </div>
+            <div class="creature-card">
+                <span class="creature-icon">🦀</span>
+                <div class="creature-name">The Crab</div>
+                <div class="creature-subtitle">Defensive Avoider</div>
+            </div>
+        </div>
+
+        <!-- Quiz Introduction -->
+        <div class="quiz-intro" id="quiz-intro">
+            <h2>Ready to dive in?</h2>
+            <p>Answer 20 quick questions about your cold email approach and we'll reveal which sea creature matches your outbound personality — along with personalized insights to improve your results.</p>
+            <button class="start-button" onclick="startQuiz()">Start the Quiz</button>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="quiz-section" id="quiz-section">
+            <div class="progress-container">
+                <div class="progress-text">
+                    <span id="current-question">Question 1 of 20</span>
+                    <span id="progress-percent">5%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress"></div>
+                </div>
             </div>
 
-            <form id="quiz-form">
-                <!-- Questions will be inserted here by JavaScript -->
-            </form>
+            <div id="question-display"></div>
 
-            <button type="button" class="submit-btn" id="submit-btn" disabled>Show My Personality</button>
+            <div class="navigation-buttons">
+                <button class="btn btn-secondary" id="prev-btn" onclick="prevQuestion()" style="display: none;">← Previous</button>
+                <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()" disabled>Next →</button>
+            </div>
         </div>
 
-        <div id="result-container" class="result-container">
+        <!-- Result Container -->
+        <div class="quiz-section result-container" id="result-container">
             <!-- Results will be shown here -->
         </div>
     </div>
@@ -598,63 +1020,90 @@
             }
         };
 
+        let currentQuestionIndex = 0;
         const answers = {};
-        let totalQuestions = questions.length;
 
-        function renderQuestions() {
-            const form = document.getElementById('quiz-form');
-            questions.forEach((q, index) => {
-                const questionDiv = document.createElement('div');
-                questionDiv.className = 'question-container';
-                questionDiv.innerHTML = `
-                    <h3>${index + 1}. ${q.question}</h3>
-                    <div class="options" id="options-${q.id}">
-                        ${q.options.map(opt => `
-                            <div class="option" data-question="${q.id}" data-value="${opt.value}">
+        function startQuiz() {
+            document.getElementById('hero-section').style.display = 'none';
+            document.getElementById('creatures-showcase').style.display = 'none';
+            document.getElementById('quiz-intro').style.display = 'none';
+            document.getElementById('quiz-section').classList.add('active');
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            const question = questions[currentQuestionIndex];
+            const questionDisplay = document.getElementById('question-display');
+            
+            questionDisplay.innerHTML = `
+                <div class="question-container">
+                    <span class="question-number">Question ${currentQuestionIndex + 1} of 20</span>
+                    <h3>${question.question}</h3>
+                    <div class="options">
+                        ${question.options.map(opt => `
+                            <div class="option ${answers[question.id] === opt.value ? 'selected' : ''}" 
+                                 onclick="selectOption(${question.id}, '${opt.value}')">
                                 ${opt.text}
                             </div>
                         `).join('')}
                     </div>
-                `;
-                form.appendChild(questionDiv);
-            });
+                </div>
+            `;
 
-            // Add click handlers
-            document.querySelectorAll('.option').forEach(option => {
-                option.addEventListener('click', function() {
-                    const questionId = this.dataset.question;
-                    const value = this.dataset.value;
-                    
-                    // Remove selected from siblings
-                    document.querySelectorAll(`[data-question="${questionId}"]`).forEach(opt => {
-                        opt.classList.remove('selected');
-                    });
-                    
-                    // Add selected to this option
-                    this.classList.add('selected');
-                    
-                    // Store answer
-                    answers[questionId] = value;
-                    
-                    // Update progress
-                    updateProgress();
-                    
-                    // Enable submit if all answered
-                    checkAllAnswered();
-                });
+            updateProgress();
+            updateButtons();
+        }
+
+        function selectOption(questionId, value) {
+            answers[questionId] = value;
+            
+            // Update UI
+            document.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('selected');
             });
+            event.target.classList.add('selected');
+            
+            // Enable next button
+            document.getElementById('next-btn').disabled = false;
         }
 
         function updateProgress() {
-            const answered = Object.keys(answers).length;
-            const percentage = (answered / totalQuestions) * 100;
-            document.getElementById('progress').style.width = percentage + '%';
+            const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+            document.getElementById('progress').style.width = progress + '%';
+            document.getElementById('current-question').textContent = `Question ${currentQuestionIndex + 1} of 20`;
+            document.getElementById('progress-percent').textContent = Math.round(progress) + '%';
         }
 
-        function checkAllAnswered() {
-            const submitBtn = document.getElementById('submit-btn');
-            if (Object.keys(answers).length === totalQuestions) {
-                submitBtn.disabled = false;
+        function updateButtons() {
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+
+            prevBtn.style.display = currentQuestionIndex > 0 ? 'block' : 'none';
+            
+            if (currentQuestionIndex === questions.length - 1) {
+                nextBtn.textContent = 'Show My Result →';
+            } else {
+                nextBtn.textContent = 'Next →';
+            }
+
+            // Check if current question is answered
+            const currentQuestion = questions[currentQuestionIndex];
+            nextBtn.disabled = !answers[currentQuestion.id];
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                displayQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                displayQuestion();
             }
         }
 
@@ -670,8 +1119,6 @@
                 crab: 0
             };
 
-            // Scoring logic based on the patterns
-            
             // Whale indicators
             if (answers[1] === 'whale') scores.whale += 3;
             if (answers[2] === 'surface' || answers[2] === 'none') scores.whale += 2;
@@ -739,9 +1186,8 @@
             if (answers[12] === 'rarely' || answers[12] === 'never') scores.crab += 2;
             if (answers[19] === 'sequence') scores.crab += 2;
 
-            // Find highest score
             let maxScore = 0;
-            let resultPersonality = 'octopus'; // default
+            let resultPersonality = 'octopus';
             
             for (let [personality, score] of Object.entries(scores)) {
                 if (score > maxScore) {
@@ -753,37 +1199,39 @@
             return resultPersonality;
         }
 
-        function showResult(personalityType) {
+        function showResult() {
+            const personalityType = calculatePersonality();
             const personality = personalities[personalityType];
-            const quizContainer = document.getElementById('quiz-container');
+            
+            document.getElementById('quiz-section').classList.remove('active');
+            document.getElementById('quiz-section').style.display = 'none';
+            
             const resultContainer = document.getElementById('result-container');
-
             resultContainer.innerHTML = `
-                <div class="personality-icon">${personality.icon}</div>
+                <span class="personality-icon-large">${personality.icon}</span>
                 <h2 class="personality-title">${personality.title}</h2>
                 <p class="personality-subtitle">${personality.subtitle}</p>
                 
-                <div class="personality-section">
-                    <h4>What This Means</h4>
-                    <p>${personality.meaning}</p>
+                <div class="personality-meaning">
+                    ${personality.meaning}
                 </div>
 
                 <div class="personality-section">
-                    <h4>Your Strengths</h4>
+                    <h4><span class="section-icon">💪</span> Your Strengths</h4>
                     <ul>
                         ${personality.strengths.map(s => `<li>${s}</li>`).join('')}
                     </ul>
                 </div>
 
                 <div class="personality-section">
-                    <h4>The Problem</h4>
+                    <h4><span class="section-icon">⚠️</span> The Problem</h4>
                     <ul>
                         ${personality.problems.map(p => `<li>${p}</li>`).join('')}
                     </ul>
                 </div>
 
                 <div class="personality-section">
-                    <h4>What to Fix</h4>
+                    <h4><span class="section-icon">🎯</span> What to Fix</h4>
                     <ul>
                         ${personality.fixes.map(f => `<li>${f}</li>`).join('')}
                     </ul>
@@ -791,19 +1239,11 @@
 
                 <button class="restart-btn" onclick="location.reload()">Take Quiz Again</button>
             `;
-
-            quizContainer.style.display = 'none';
+            
+            resultContainer.classList.add('active');
             resultContainer.style.display = 'block';
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-
-        // Initialize
-        renderQuestions();
-
-        document.getElementById('submit-btn').addEventListener('click', function() {
-            const result = calculatePersonality();
-            showResult(result);
-        });
     </script>
 </body>
 </html>
